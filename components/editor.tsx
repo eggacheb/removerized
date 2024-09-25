@@ -146,8 +146,8 @@ export const Editor = () => {
             <>
               {imageData ? (
                 <Image
-                  width={300}
-                  height={150}
+                  width={800}
+                  height={450}
                   className="flex max-h-80 w-full rounded-xl"
                   src={imageData}
                   alt="Selected image"
@@ -164,8 +164,8 @@ export const Editor = () => {
               {resultData ? (
                 <div className="relative flex flex-col items-center justify-center gap-2 rounded-xl bg-neutral-200 dark:bg-neutral-900">
                   <Image
-                    width={300}
-                    height={150}
+                    width={800}
+                    height={450}
                     className="grid-pattern flex max-h-80 w-full rounded-xl "
                     src={resultData}
                     alt="Processed image"
