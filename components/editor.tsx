@@ -185,7 +185,7 @@ export const Editor = () => {
       )}
     </>
   }
-/></ReactCompareSlider>
+></ReactCompareSlider>
       </div>
 
       {/* Tools */}
