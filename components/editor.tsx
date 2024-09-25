@@ -103,131 +103,124 @@ export const Editor = () => {
   }
 
   return (
-    <div className="flex w-full flex-col gap-2">
-      {/* Input */}
-      <div
-        className="mt-2 flex items-center justify-center gap-4 px-2 md:px-28"
-        onSubmit={remove}
-      >
-        <FileUploader
-          value={files}
-          dropzoneOptions={{
-            multiple: false,
-            accept: {
-              "image/png": [".png"],
-              "image/jpg": [".jpg", ".jpeg"],
-              "image/webp": [".webp"],
-            },
-          }}
-          onValueChange={handleDataChange}
-          className="relative max-w-xs space-y-1 rounded-xl transition-all hover:bg-neutral-200 dark:hover:bg-neutral-900"
-        >
-          <FileInput>
-            <div className="flex w-full flex-col items-center justify-center pb-4 pt-3 ">
-              <Icons.SolarCloudUploadBoldDuotone className="size-8"></Icons.SolarCloudUploadBoldDuotone>
-              <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                <span className="font-semibold">Click to upload</span>
-                &nbsp; or drag and drop
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                PNG, JPG or WEBP file
-              </p>
-            </div>
-          </FileInput>
-          <FileUploaderContent></FileUploaderContent>
-        </FileUploader>
-      </div>
-
-      {/* Images */}
-      <div className="flex size-full items-center justify-center gap-16 p-4">
-<ReactCompareSlider
-  className="max-w-4xl rounded-xl"  // 修改这里的 max-w-xl 为更大的 max-w-4xl
-  itemOne={
-    <>
-      {imageData ? (
-        <Image
-          width={1200}  // 调整为更大的宽度
-          height={675}   // 调整为更大的高度
-          className="flex max-h-[500px] w-full rounded-xl"  // 调整 max-h-80 为更大的高度，比如 500px
-          src={imageData}
-          alt="Selected image"
-        />
-      ) : (
-        <div className="flex h-[500px] w-[40rem] items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
-          <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
+<div className="flex w-full flex-col gap-2">
+  {/* Input and Image side by side */}
+  <div className="mt-2 flex items-start justify-center gap-16 px-2 md:px-28">
+    {/* Upload Button */}
+    <FileUploader
+      value={files}
+      dropzoneOptions={{
+        multiple: false,
+        accept: {
+          "image/png": [".png"],
+          "image/jpg": [".jpg", ".jpeg"],
+          "image/webp": [".webp"],
+        },
+      }}
+      onValueChange={handleDataChange}
+      className="relative max-w-xs space-y-1 rounded-xl transition-all hover:bg-neutral-200 dark:hover:bg-neutral-900"
+    >
+      <FileInput>
+        <div className="flex w-full flex-col items-center justify-center pb-4 pt-3">
+          <Icons.SolarCloudUploadBoldDuotone className="size-8"></Icons.SolarCloudUploadBoldDuotone>
+          <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+            <span className="font-semibold">Click to upload</span> &nbsp; or drag and drop
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or WEBP file</p>
         </div>
-      )}
-    </>
-  }
-  itemTwo={
-    <>
-      {resultData ? (
-        <div className="relative flex flex-col items-center justify-center gap-2 rounded-xl bg-neutral-200 dark:bg-neutral-900">
-          <Image
-            width={1200}  // 调整宽度
-            height={675}   // 调整高度
-            className="grid-pattern flex max-h-[500px] w-full rounded-xl "
-            src={resultData}
-            alt="Processed image"
-          />
+      </FileInput>
+      <FileUploaderContent></FileUploaderContent>
+    </FileUploader>
 
-          <DustEffect
-            className="absolute flex max-h-[500px] w-full rounded-xl"
-            src={imageData!}
-            show={show}
-            option={{ baseDuration: 100, blur: 2 }}
-          />
-        </div>
-      ) : (
-        <div className="flex h-[500px] w-[40rem] items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
-          <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
-        </div>
-      )}
-    </>
-  }
-></ReactCompareSlider>
-      </div>
-
-      {/* Tools */}
-      <div className="flex items-center justify-center gap-2">
-        <Button
-          variant={"ringHover"}
-          className="rounded-full font-bold"
-          onClick={remove}
-          disabled={!imageData}
-        >
-          <Icons.SolarGalleryRemoveLineDuotone className="mr-2 size-5"></Icons.SolarGalleryRemoveLineDuotone>
-          Process
-        </Button>
-
-        <Button
-          variant={"linkHover2"}
-          disabled={!resultData}
-          className="font-bold"
-          onClick={handleDownload}
-        >
-          <Icons.SolarDownloadMinimalisticBoldDuotone className="mr-2 size-5"></Icons.SolarDownloadMinimalisticBoldDuotone>
-          Download
-        </Button>
-      </div>
-
-      <AlertDialog open={showDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Processing</AlertDialogTitle>
-            <AlertDialogDescription className="flex flex-col gap-2">
-              <p>{dialogText}</p>
-              {dialogText.includes("Downloading") ? (
-                <Progress
-                  value={(dialogProgress * 100) / dialogTotal}
-                ></Progress>
-              ) : (
-                <Loader></Loader>
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-        </AlertDialogContent>
-      </AlertDialog>
+    {/* Image Display */}
+    <div className="flex items-center justify-center">
+      <ReactCompareSlider
+        className="max-w-2xl rounded-xl"  // 放大图片框的宽度
+        itemOne={
+          <>
+            {imageData ? (
+              <Image
+                width={1000}   // 放大图片宽度
+                height={600}    // 放大图片高度
+                className="flex max-h-[600px] w-full rounded-xl"
+                src={imageData}
+                alt="Selected image"
+              />
+            ) : (
+              <div className="flex h-[600px] w-[40rem] items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
+                <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
+              </div>
+            )}
+          </>
+        }
+        itemTwo={
+          <>
+            {resultData ? (
+              <div className="relative flex flex-col items-center justify-center gap-2 rounded-xl bg-neutral-200 dark:bg-neutral-900">
+                <Image
+                  width={1000}   // 放大处理后的图片
+                  height={600}   // 放大处理后的图片
+                  className="grid-pattern flex max-h-[600px] w-full rounded-xl"
+                  src={resultData}
+                  alt="Processed image"
+                />
+                <DustEffect
+                  className="absolute flex max-h-[600px] w-full rounded-xl"
+                  src={imageData!}
+                  show={show}
+                  option={{ baseDuration: 100, blur: 2 }}
+                />
+              </div>
+            ) : (
+              <div className="flex h-[600px] w-[40rem] items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
+                <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
+              </div>
+            )}
+          </>
+        }
+      ></ReactCompareSlider>
     </div>
+  </div>
+
+  {/* Tools */}
+  <div className="flex items-center justify-center gap-2">
+    <Button
+      variant={"ringHover"}
+      className="rounded-full font-bold"
+      onClick={remove}
+      disabled={!imageData}
+    >
+      <Icons.SolarGalleryRemoveLineDuotone className="mr-2 size-5"></Icons.SolarGalleryRemoveLineDuotone>
+      Process
+    </Button>
+
+    <Button
+      variant={"linkHover2"}
+      disabled={!resultData}
+      className="font-bold"
+      onClick={handleDownload}
+    >
+      <Icons.SolarDownloadMinimalisticBoldDuotone className="mr-2 size-5"></Icons.SolarDownloadMinimalisticBoldDuotone>
+      Download
+    </Button>
+  </div>
+
+  {/* Dialog */}
+  <AlertDialog open={showDialog}>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Processing</AlertDialogTitle>
+        <AlertDialogDescription className="flex flex-col gap-2">
+          <p>{dialogText}</p>
+          {dialogText.includes("Downloading") ? (
+            <Progress value={(dialogProgress * 100) / dialogTotal}></Progress>
+          ) : (
+            <Loader></Loader>
+          )}
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+    </AlertDialogContent>
+  </AlertDialog>
+</div>
   )
 }
