@@ -140,54 +140,52 @@ export const Editor = () => {
 
       {/* Images */}
       <div className="flex size-full items-center justify-center gap-16 p-4">
-        <ReactCompareSlider
-          className="max-w-xl rounded-xl"
-          itemOne={
-            <>
-              {imageData ? (
-                <Image
-                  width={800}
-                  height={450}
-                  className="flex max-h-80 w-full rounded-xl"
-                  src={imageData}
-                  alt="Selected image"
-                />
-              ) : (
-                <div className="flex h-80 w-[36rem] items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
-                  <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
-                </div>
-              )}
-            </>
-          }
-          itemTwo={
-            <>
-              {resultData ? (
-                <div className="relative flex flex-col items-center justify-center gap-2 rounded-xl bg-neutral-200 dark:bg-neutral-900">
-                  <Image
-                    width={800}
-                    height={450}
-                    className="grid-pattern flex max-h-80 w-full rounded-xl "
-                    src={resultData}
-                    alt="Processed image"
-                  />
+<ReactCompareSlider
+  className="max-w-4xl rounded-xl"  // 修改这里的 max-w-xl 为更大的 max-w-4xl
+  itemOne={
+    <>
+      {imageData ? (
+        <Image
+          width={1200}  // 调整为更大的宽度
+          height={675}   // 调整为更大的高度
+          className="flex max-h-[500px] w-full rounded-xl"  // 调整 max-h-80 为更大的高度，比如 500px
+          src={imageData}
+          alt="Selected image"
+        />
+      ) : (
+        <div className="flex h-[500px] w-[40rem] items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
+          <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
+        </div>
+      )}
+    </>
+  }
+  itemTwo={
+    <>
+      {resultData ? (
+        <div className="relative flex flex-col items-center justify-center gap-2 rounded-xl bg-neutral-200 dark:bg-neutral-900">
+          <Image
+            width={1200}  // 调整宽度
+            height={675}   // 调整高度
+            className="grid-pattern flex max-h-[500px] w-full rounded-xl "
+            src={resultData}
+            alt="Processed image"
+          />
 
-                  <DustEffect
-                    className="absolute flex max-h-80 w-full rounded-xl"
-                    src={imageData!}
-                    show={show}
-                    option={{ baseDuration: 100, blur: 2 }}
-                  />
-                </div>
-              ) : (
-                <div className="flex size-full items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
-                  <div className="grid-pattern flex size-full items-center justify-center">
-                    <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
-                  </div>
-                </div>
-              )}
-            </>
-          }
-        ></ReactCompareSlider>
+          <DustEffect
+            className="absolute flex max-h-[500px] w-full rounded-xl"
+            src={imageData!}
+            show={show}
+            option={{ baseDuration: 100, blur: 2 }}
+          />
+        </div>
+      ) : (
+        <div className="flex h-[500px] w-[40rem] items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
+          <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
+        </div>
+      )}
+    </>
+  }
+/></ReactCompareSlider>
       </div>
 
       {/* Tools */}
