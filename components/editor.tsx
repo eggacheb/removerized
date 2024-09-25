@@ -104,8 +104,8 @@ export const Editor = () => {
 
   return (
 <div className="flex w-full flex-col gap-2">
-  {/* Input and Image side by side */}
-  <div className="mt-2 flex items-start justify-center gap-16 px-2 md:px-28">
+  {/* Input and Buttons */}
+  <div className="mt-2 flex flex-col items-center justify-center gap-4 px-2 md:px-28">
     {/* Upload Button */}
     <FileUploader
       value={files}
@@ -132,77 +132,77 @@ export const Editor = () => {
       <FileUploaderContent></FileUploaderContent>
     </FileUploader>
 
-    {/* Image Display */}
-    <div className="flex items-center justify-center w-full">
-      <ReactCompareSlider
-        className="w-full h-auto rounded-xl"  // 设置图片框的宽度为全屏，且高度自适应内容
-        itemOne={
-          <>
-            {imageData ? (
-              <Image
-                width={1920}   // 更大的图片宽度
-                height={1080}   // 更大的图片高度
-                className="object-contain w-full h-auto rounded-xl"  // 确保宽度自适应，高度按比例变化
-                src={imageData}
-                alt="Selected image"
-              />
-            ) : (
-              <div className="flex w-full h-auto items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
-                <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
-              </div>
-            )}
-          </>
-        }
-        itemTwo={
-          <>
-            {resultData ? (
-              <div className="relative flex flex-col items-center justify-center gap-2 w-full h-auto rounded-xl bg-neutral-200 dark:bg-neutral-900">
-                <Image
-                  width={1920}   // 更大的处理后图片的宽度
-                  height={1080}   // 更大的处理后图片的高度
-                  className="object-contain w-full h-auto rounded-xl"  // 确保宽度自适应，高度按比例变化
-                  src={resultData}
-                  alt="Processed image"
-                />
-                <DustEffect
-                  className="absolute w-full h-full rounded-xl"
-                  src={imageData!}
-                  show={show}
-                  option={{ baseDuration: 100, blur: 2 }}
-                />
-              </div>
-            ) : (
-              <div className="flex w-full h-auto items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
-                <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
-              </div>
-            )}
-          </>
-        }
-      ></ReactCompareSlider>
+    {/* Buttons below Upload Button */}
+    <div className="flex items-center justify-center gap-2">
+      <Button
+        variant={"ringHover"}
+        className="rounded-full font-bold"
+        onClick={remove}
+        disabled={!imageData}
+      >
+        <Icons.SolarGalleryRemoveLineDuotone className="mr-2 size-5"></Icons.SolarGalleryRemoveLineDuotone>
+        Process
+      </Button>
+
+      <Button
+        variant={"linkHover2"}
+        disabled={!resultData}
+        className="font-bold"
+        onClick={handleDownload}
+      >
+        <Icons.SolarDownloadMinimalisticBoldDuotone className="mr-2 size-5"></Icons.SolarDownloadMinimalisticBoldDuotone>
+        Download
+      </Button>
     </div>
   </div>
 
-  {/* Tools */}
-  <div className="flex items-center justify-center gap-2">
-    <Button
-      variant={"ringHover"}
-      className="rounded-full font-bold"
-      onClick={remove}
-      disabled={!imageData}
-    >
-      <Icons.SolarGalleryRemoveLineDuotone className="mr-2 size-5"></Icons.SolarGalleryRemoveLineDuotone>
-      Process
-    </Button>
-
-    <Button
-      variant={"linkHover2"}
-      disabled={!resultData}
-      className="font-bold"
-      onClick={handleDownload}
-    >
-      <Icons.SolarDownloadMinimalisticBoldDuotone className="mr-2 size-5"></Icons.SolarDownloadMinimalisticBoldDuotone>
-      Download
-    </Button>
+  {/* Image Display */}
+  <div className="flex items-center justify-center w-full">
+    <ReactCompareSlider
+      className="w-full h-auto rounded-xl"  // 确保宽度自适应，高度自适应内容
+      itemOne={
+        <>
+          {imageData ? (
+            <Image
+              width={1920}   // 图片上传后显示的宽度
+              height={1080}   // 图片上传后显示的高度
+              className="object-contain w-full h-full rounded-xl"
+              src={imageData}
+              alt="Selected image"
+            />
+          ) : (
+            <div className="flex h-[500px] w-full items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
+              <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
+            </div>
+          )}
+        </>
+      }
+      itemTwo={
+        <>
+          {resultData ? (
+            <div className="relative flex flex-col items-center justify-center gap-2 w-full h-full rounded-xl bg-neutral-200 dark:bg-neutral-900">
+              <Image
+                width={1920}   // 处理后的图片显示的宽度
+                height={1080}   // 处理后的图片显示的高度
+                className="object-contain w-full h-full rounded-xl"
+                src={resultData}
+                alt="Processed image"
+              />
+              <DustEffect
+                className="absolute w-full h-full rounded-xl"
+                src={imageData!}
+                show={show}
+                option={{ baseDuration: 100, blur: 2 }}
+              />
+            </div>
+          ) : (
+            <div className="flex h-[500px] w-full items-center justify-center rounded-xl bg-neutral-200 dark:bg-neutral-900">
+              <Icons.SolarGalleryBoldDuotone className="size-16 text-neutral-500"></Icons.SolarGalleryBoldDuotone>
+            </div>
+          )}
+        </>
+      }
+    ></ReactCompareSlider>
   </div>
 
   {/* Dialog */}
